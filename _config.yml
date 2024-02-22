@@ -27,7 +27,8 @@ description: >- # this means to ignore newlines until "baseurl:"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://brunoberisso.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: QueDijoQueDijo
-github_username:  brunoberisso
+github_username:  BrunoBerisso
+repository: "BrunoBerisso/brunoberisso.github.io"
 
 # Build settings
 remote_theme: "mmistakes/minimal-mistakes@4.24.0"
@@ -84,3 +85,10 @@ defaults:
       comments: true
       share: true
       related: true
+
+comments:
+  provider: "utterances"
+  utterances:
+    theme: "preferred-color-scheme" # "github-dark"
+    issue_term: "pathname"
+    label: "comment" # Optional - must be existing label.
