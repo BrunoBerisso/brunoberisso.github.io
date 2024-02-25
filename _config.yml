@@ -29,9 +29,11 @@ url: "https://brunoberisso.github.io" # the base hostname & protocol for your si
 twitter_username: QueDijoQueDijo
 github_username:  BrunoBerisso
 repository: "BrunoBerisso/brunoberisso.github.io"
+search: true
 
 # Build settings
 remote_theme: "mmistakes/minimal-mistakes@4.24.0"
+minimal_mistakes_skin: "dirt"
 
 plugins:
   - jekyll-feed
@@ -60,7 +62,7 @@ plugins:
 author:
   name: "Bruno Berisso"
   avatar: "/assets/avatar.jpeg"
-  bio: "A nerd writing." # Note: Markdown is allowed
+  bio: "A nerd writing about software." # Note: Markdown is allowed
   location: "Tenerife"
   links:
     - label: "Twitter"
