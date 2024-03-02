@@ -3,23 +3,23 @@ title:  "First thing to try: Elixir"
 date:   2024-02-27 23:54:35 +0000
 ---
 
-So I’m starting (continuing) to consume my “Things To Try” list and one of the many projects I have half-backed there happened to be written on Elixir https://elixir-lang.org using Phoenix https://www.phoenixframework.org for god knows what reason.
+So I’m starting (continuing) to consume my _“Things To Try”_ list and one of the many projects I have half-backed there happened to be written on Elixir [https://elixir-lang.org](https://elixir-lang.org) using Phoenix [https://www.phoenixframework.org](https://www.phoenixframework.org) for god knows what reason.
 
-Today I checked my repo and I started this one 3 years ago… That’s an absurd amount of time for getting something in “pending” state and still remembering it!
+I checked the repo and I started this one 3 years ago… That’s an absurd amount of time for getting something in “pending” state and still remembering it!
 
-Anyhow, I knew I was going to pick this up again for a few days so I had been checking the docs and such, the official guides [https://hexdocs.pm/elixir/introduction.html] are great reading material but they lacke hands-on rhythm. On the other hand, Phoenix Up and Running [https://hexdocs.pm/phoenix/up_and_running.html] docs are great but they left too many open questions for me. This happened because I started to consume all these docs before (3 years ago) and never really used much of them, which left me in an intermediate state where I kind of know things but not really which happened to me a lot… 
+Anyhow, I knew I was going to pick this up again for a few days so I had been checking the docs and such, [the official guides](https://hexdocs.pm/elixir/introduction.html) are great reading material but they lacke hands-on rhythm. On the other hand, [Phoenix Up and Running](https://hexdocs.pm/phoenix/up_and_running.html) docs are also very good but they left too many open questions for me. This happened to me because I started to consume all these docs before (3 years ago) and never really used much of them, which left me in an intermediate state where I _kind of know_ things but _not really_ which happened to me a lot… 
 
-So I forgot Phoenix for a moment and concentrated my efforts on Elixir first. Elixir is a statically-typed functional language that compiles to BEAM code which is the virtual machine developed to run Erlang programs, which in turn is another functional programming language specifically created to produce highly efficient parallel programs. Erlang was created in the 80s by Ericsson for handling their telecom systems, it’s currently used by CISCO (which spark the claim that “Erlang handled 90% of internet traffic” https://news.ycombinator.com/item?id=17218190), was used initially for WhatsApp, etc…
+So I forgot Phoenix for a moment and concentrated my efforts on Elixir first. Elixir is a statically-typed functional language that compiles to BEAM code which is the virtual machine specifically designed to run highly concurrent programs. It was initially created to support Erlang which is an old programming languate was created in the 80s by Ericsson for handling their telecom systems, it’s currently used by CISCO (which spark the claim that [“Erlang handled 90% of internet traffic”](https://news.ycombinator.com/item?id=17218190)), was used initially for WhatsApp, Goldman Sachs for high frequency trading, and many more to takle specific problems that require one program doing many things at the same time.
 
-Although Elixir and Erlang are different languages they are similar https://elixir-lang.org/crash-course.html at many levels, the more important one is that both rely on the BEAM virtual machine so they are highly optimized for parallel executions.
+Although Elixir and Erlang are different languages they are [similar at many levels](https://elixir-lang.org/crash-course.html), but the key distintive feature is that they are specifically consived for solving problems that require high concurrency. Such programs could be for example (sourpice sourprice) a web server, a meetings tool like Zoom (which I think was using Erlang at some point), a controller in a plane gettings sensor values from multiple source, etc
 
-As his older sister (Erlang is an old lady for me), Elixir is being used by some big companies like Discord, but also Slack and Pinterest are in the list. Although It’s true that they have it on some key places as described for the Discord team here [https://medium.com/@siddharth.sabron/how-discord-used-rust-to-scale-elixir-up-to-11-million-concurrent-users-7eb84194aee5] 
+As his older sister (Erlang is an old lady for me), Elixir is being used by some big companies like Discord, Slack and Pinterest. Although It’s true that they have it confined to some key places as described for [the Discord team here](https://medium.com/@siddharth.sabron/how-discord-used-rust-to-scale-elixir-up-to-11-million-concurrent-users-7eb84194aee5) the fact that it's still being activly used after so many years speaks to the stability of the tool.
 
-Hands on
+### Hands on
 
-I wouldn’t try a hello world because it was boring and would not show the point, but also “showing the point” here means implementing a fault tolerant - performance critical distributed system and I don’t want to keep spinning in circles here.
+To flex my memory I had to write some Elixir but I wouldn’t try a hello world because it was boring and would not show me the true power of the tool, also _"show me the true power"_ here means implementing a fault tolerant - performance critical distributed system and I don’t want to keep spinning in circles.
 
-The basic abstraction on an Elixir program is the process, it means that is the norm to model a program as a tree of processes that send messages to one another. So I thought I would start there, after a couple of iterations I have this
+One of the basic abstractions on an Elixir program is the process, it means that is the norm to model a program as a tree of processes connected by parent/child relationships that send messages to one another. So I thought I would start there, after a couple of iterations I have this
 
 {% highlight elixir %}
 # Signal tests
@@ -79,17 +79,16 @@ Process #PID<0.105.0> is down
 {% endhighlight %}
 
 which is kind of revealing!
-1. It seems that indeed the spawn process is running in parallel, "Done" was printed while :my_proc was "Sleeping..."
-2. After "Ok ready" the process appers to receive the messages we sent while it was sleeping. It means it keeps a queue with the messages it could not handled because it was sleeping
+1. It seems that indeed the spawned process is running in parallel, "Done" was printed while :my_proc was "Sleeping..."
+2. After "Ok ready" the process appers to process the messages we sent while it was sleeping. It means it keeps a queue with the messages it could not handled because it was sleeping
 3. As soon as the process wakes up it receive all the pending messages
 4. The "main" process waits for all they spawned process to finish before terminate
 
-Multiple Hands on
+### Multiple Hands on
 
 > What if we have processes running on different machiens? would those messages could be sent as easelly?
 
-This is me wondering after trying that small thing before, spoiler alert: it is as simple.
-So I digg some more on internet and found how to do this, it's super simple. The only thing I have to do to try it out was start more than one Elixir shell passing in a "hostname" and have some code in one side to call from the other.
+This was me wondering after trying that small thing before, so I digg some more on internet and found how to do this. Spoiler aler: it's super simple. The only thing I have to do to try it out was start more than one Elixir shell passing in a "hostname" and have some code in one side to call from the other.
 
 I start two terminals, one with session name (--sname) `choso@localhost` and another one with `playa@localhost`.
 {% highlight zsh %}
@@ -100,7 +99,7 @@ Interactive Elixir (1.16.0) - press Ctrl+C to exit (type h() ENTER for help)
 iex(choso@localhost)1> 
 {% endhighlight %}
 
-After playing a while I try this on `choso@localhost`
+After playing for a while I try this on `choso@localhost`
 
 {% highlight elixir %}
 iex(choso@localhost)1> pid = Node.spawn_link(:playa@localhost, fn ->
@@ -129,11 +128,11 @@ iex(choso@localhost)5> flush()
 I'm freaking out at this point... this is what we are seeing
 
 1. That "Node.spawn_link()" call pushed the code in the "fn -> ..." clusure to the remote node. So it deployed the code by itself and returned a proces id
-2. The process id is not a "normal process id", if I try to get more info it just blow up saying "this process is remote"
+2. The process id is not a "normal process id", if I try to get more info it just blows up saying "this process is remote"
 3. After flushing the pending messages (not sure why that was needed) I got the expected response ":hello_there"
 4. The final ":ok" is the standard response message, whatever came before is payload
 
-So I went ahead and killed `playa@localhost`, I don't really like the beach, and try to send another message
+So I went ahead and killed `playa@localhost` and try to send another message
 
 {% highlight elixir %}
 iex(choso@localhost)6> send pid, {:say_hi, self()}
@@ -142,6 +141,13 @@ iex(choso@localhost)7> flush
 :ok
 {% endhighlight %}
 
-The remote process was not running but the "link" still report the `:ok` response but without any payload. 
+The remote process was not running but the "link" still report the `:ok` response but without any payload. This behaviour is intended because process die, get restarted and recreated continuously as part of the normal operations.
 
-So, now I felt I have a good grasp of what Elixir was about. Now I had to get my hands on Phoenix to start rolling this thing for real!
+### Simple Made Easy
+
+As my understanding of Elixir growth it came to mind [this old talk](https://youtu.be/SxdOUGdseq4) from Rich Hickey (creator of Closure) titled _"Simple Made Easy"_, the guy went into great detail explaining the difference between "simple" and "easy" and how the software industry (meaning us) get caough on the "easy" which lead to poor software in the middle-long term.
+
+I connect this with Elixir because now that I have the chance to use it a little it's a pretty simple language, you have like 3 or 4 basic constructions and a couple of patters and that's it. No weird type variables, no inheritance, no classes/methods, no global variables. The language is simple but it's not easy because you need to learn it! it's not like picking yet-another C-like language that you will read automatically but once you invest some time it's so simple that it will be hard to find a piece of code that you could not understand, which happend to me with javascript evey day after being reading it for too much time.
+
+So!, now I felt I have a good grasp of what Elixir was about.
+Next I had to get my hands on Phoenix to start rolling this thing for real!
