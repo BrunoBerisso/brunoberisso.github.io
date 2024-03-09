@@ -3,34 +3,64 @@ title:  "Phoenix: the Elixir Django"
 date:   2024-02-27 23:54:35 +0000
 ---
 
-- What is Phoenix
-- Why it's cool?
-- Hot new use case https://elixir-lang.org/blog/2024/03/05/veeps-elixir-case/
+Ok so, what is Phoenix you might ask? Good question! Phoenix is a big framework for building end-to-end web apps. Think of it as ”the Django of the Elixir world” and as such it does everything you might need (and more): server side HTML template rendering, REST API facilities, DB access, migrations, login, telemetry, etc… You could write a whole book about Phoenix alone given the amount ot things it does (like Django) and I'll write some more about it in coming posts, but I'm writing this because it provides a set of extra features that set it aside of most of what's out there to work with web apps. And push me into this madness of fighting with a niche lovely language like Elixir.
 
-Phoenix
+## LiveView
 
-Ok so, what is Phoenix you might ask? Good question! Phoenix is a big framework for building end-to-end web apps. Think of it as ”the Django of the Elixir world” and as such it does everything you might need (and more): server side HTML template rendering, REST API facilities,  DB access, migrations, login, telemetry, etc… but it provides a set of extra features that push me into this madness of fighting with a niche lovely idea like Erlang.
+This is _the_ feature that put Phoenix in the radar for me, it is a mechanism to build client-server applications that provides two things: communication using lower level APIs instead of HTTP REST requests, and it keeps track of the state affecting the UI in the client. Using this two things it allows to build interactions very similar to how React works:
 
-“Channels” https://hexdocs.pm/phoenix/channels.html
-Allows you to use your backend as a message broker for your app. You create a topic and hook to it from your clients using web socket or long polling (supported by default if you built your clients inside Phoenix). Once the connection is established a client can connect with any other clients listening to the given topic, or the server can push a message down to one particular client or broadcast across all of them.
+1. You render the UI with some state.
+2. An event fires tipically in the UI like the click of a button that produces a change in the state.
+3. LiveView [compute the diff](https://www.reddit.com/r/elixir/comments/t80xbw/does_phoenix_liveview_use_domdiffing_to_update/) required to update the UI and push those changes down to the client.
 
-The neat thing is: your backend might be a cluster with a handful of nodes, if you and I are connected to the same topic but to different nodes everything will work exactly the same. This allows the backend to scale vertically and horizontally without compromising the feature. In any case, the ceiling running in one box seems to be decently high https://phoenixframework.org/blog/the-road-to-2-million-websocket-connections
+The main difference with React is that all the hard work happens in the backend instead of in the client, this open the door for all the power of [Phonenix real-time features](#real-time-features-you-say) to build multi-user UIs. That's way companies like [Veeps use it to handle live streaming](http://localhost:4000/2024/02/27/phoenix.html#real-time-features-you-say) to milions of users.
+
+Now think about the cases where the stream of data comes from other sistems, like in finances for example where you have a constant stream of market updates. Phonenix would be a great option to have an OLAP pipeline running at near real-time speed pushing updates to clients.
+
+For all this magic to work you will need to handle your UI using Phoenix, so it knows what state is affecting what part of the UI and how to compute the diff. To do so it provides a template language so you can write things like this
+
+{% highlight elixir %}
+<.list>
+  <:item title="Title"><%= @feed.title %></:item>
+  <:item title="Url"><%= @feed.url %></:item>
+  <:item title="XPath"><%= @feed.xpath_expression %></:item>
+</.list>
+{% endhighlight %}
+
+which will grab the values in the `@feed` struct and produce an HTML like (styling left out)
+
+{% highlight html %}
+<dl>
+  <div>
+    <dt>Title</dt>
+    <dd>Title in @feed.title</dd>
+  </div>
+  <div>
+    <dt>Url</dt>
+    <dd>URL in @feed.utl</dd>
+  </div>
+  <div>
+    <dt>XPath</dt>
+    <dd>XPath in @feed.xpath</dd>
+  </div>
+</dl>
+{% endhighlight %}
+
+Now if for some reason `@feed.title` change to first `<dd/>` will get updated. Pretty stright forward so far!
+
+## Real-Time Features you say?
+
+These are some of the feature that came out-of-the-box with Phoenix around multi-user rea-time.
+
+### [Channels](https://hexdocs.pm/phoenix/channels.html)
+
+Allows you to use your backend as a message broker for your app. You create a topic and hook to it from your clients using web socket or long polling (supported by default if you built your clients inside Phoenix). Once the connection is established a client can communicate with any other clients connected to the same topic, or the server can push a message down to one particular client, or broadcast across all of them.
+
+The neat thing is: your backend might be a cluster with a handful of nodes, if you and I are connected to the same topic but to different nodes everything will work exactly the same. This allows the backend to scale vertically and horizontally without compromising the feature. In any case, the ceiling running in one box seems to be around [a couple of millions of connections.](https://phoenixframework.org/blog/the-road-to-2-million-websocket-connections)
 
 The second neat thing is: you can use whatever you want on the client side. You are not required to handle the UI with Phoenix but you could use a native iOS app, a Raspberry Pi, and a web SPA all connect to the same topic.
 
-“Presence” https://hexdocs.pm/phoenix/Phoenix.Presence.html
-This builds user-tracking on top of channels. Allows to track if/when an user is connected or not at any given time.
+### [Presence](https://hexdocs.pm/phoenix/Phoenix.Presence.html)
+This builds user-tracking on top of Channels. Allows to track if/when an user is connected or disconnected at any given time.
 
-“LiveView”
-Using a channel as described before you can seamlessly hook your UI to send commands and receive updates from the backend. The basic mechanism works exactly like React where you have some state in the server that the runtime is watching, when that state is modified Phoenix does a render of your UI, diff with the current state and push an update to only hit the part of the UI that needs to be updated, just like React but server side.
-
-You can hook user events implementations directly to the Elixir code running in the server, so when the user clicks a button you get a method call in your backend instead of an REST API call. But this is particularly great for events not generated by the user like a dashboard showing live updates from an external source, your UI will get chirurgical updates “for free” when the external data changes.
-
-For this to work you will need to handle your UI also using Phoenix, so it knows what state is affecting what part of the UI and how to compute the diff. To do so it provides a template language so you can write things like “<%= for x <- 1..@number do %> x <% end %>” to print a list of “x”, etc..
-
-
-
-So… what I’m going to build is a RSS utility with basically two features:
-You can add real RSS feeds
-You can add a static web page and an XPath expression and get a “feed” from that
-It will check for updates every now and then and push them to a Slack channel…somehow, probably with an email address
+So… I'm building something to get a grasp of how it all comes to be.
