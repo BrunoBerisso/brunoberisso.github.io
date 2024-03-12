@@ -3,7 +3,7 @@ title:  "First thing to try: Elixir"
 date:   2024-02-27 23:54:35 +0000
 ---
 
-So I’m starting (continuing) to consume my _“Things To Try”_ list and one of the many projects I have half-backed there happened to be written on Elixir [https://elixir-lang.org](https://elixir-lang.org) using Phoenix [https://www.phoenixframework.org](https://www.phoenixframework.org) for god knows what reason.
+So I’m starting (continuing) to consume my [_“Things To Try”_]({% post_url 2024-02-25-what-is-this %}) list and one of the many projects I have half-backed there happened to be written on Elixir [https://elixir-lang.org](https://elixir-lang.org) using Phoenix [https://www.phoenixframework.org](https://www.phoenixframework.org) for god knows what reason.
 
 I checked the repo and I started this one 3 years ago… That’s an absurd amount of time for getting something in “pending” state and still remembering it!
 

@@ -3,7 +3,7 @@ title:  "Phoenix: the Elixir Django"
 date:   2024-02-27 23:54:35 +0000
 ---
 
-Ok so, what is Phoenix you might ask? Good question! Phoenix is a big framework for building end-to-end web apps. Think of it as ”the Django of the Elixir world” and as such it does everything you might need (and more): server side HTML template rendering, REST API facilities, DB access, migrations, login, telemetry, etc… You could write a whole book about Phoenix alone given the amount ot things it does (like Django) and I'll write some more about it in coming posts, but I'm writing this because it provides a set of extra features that set it aside of most of what's out there to work with web apps. And push me into this madness of fighting with a niche lovely language like Elixir.
+Ok so, as [I mentioned before]({% post_url 2024-02-27-elixir_intro %}) I'm working on a small project to learn about Phoenix, _what is that?_ you might ask, well good question! Phoenix is a big framework for building end-to-end web apps. Think of it as ”the Django of the Elixir world” and as such it does everything you might need (and more): server side HTML template rendering, REST API facilities, DB access, migrations, login, telemetry, etc… You could write a whole book about Phoenix alone given the amount ot things it does (like Django) and I'll write some more about it in coming posts, but I'm writing this because it provides a set of extra features that set it aside of most of what's out there to work with web apps. And push me into this madness of fighting with a niche lovely language like Elixir.
 
 ## LiveView
 

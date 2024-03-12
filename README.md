@@ -1,4 +1,4 @@
-# No Name
+# The State Of Things
 
 Some important links:
 - theme settings https://github.com/mmistakes/minimal-mistakes
