@@ -1,0 +1,10 @@
+---
+title:  "Pheeds"
+date:   2024-05-14 22:26:08 +0000
+---
+
+On previous posts I shared what [I found about Elixr]({% post_url 2024-02-27-elixir_intro %}) while trying to learn [how Phoenix works]({% post_url 2024-03-05-phoenix %}), all this was for building **"Pheeds"** (_Ph_oenix + f_eeds_): a simple RSS feeds reader that allows to add sources of type RSS, Atom and any other HTML page and it will automatically refresh every now and then.
+
+The _"killer feature"_ here is the HTML support which is done by allowing to configure som XPath expressions to extract the content of the page during the sync process. But it has more, it make heavy use of [LiveView]({% post_url 2024-03-05-phoenix %}#liveview)s... well, all view are _live_ which proby is not the best approach.
+
+Any way, the app is really simple and honestly was a blast to build. Every time I had to do something outside of my main task it alwas worked at the first try, is also true that gettinh through the Phoenix docs initially is a PITA. To the point that it was the drop that field the glass for me to start this blog!
