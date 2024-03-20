@@ -33,7 +33,7 @@ The explanains I think is that we tend to choose the _easy_ path when we need to
 
 ## Inverted Conway's Law
 
-Melvin Conway stated this law in [a publication I highly recommend reading](http://www.melconway.com/Home/pdf/committees.pdf):
+Melvin Conway (not to be confused with John Conway) stated this law in [a publication I highly recommend reading](http://www.melconway.com/Home/pdf/committees.pdf):
 > Organizations which design systems (in the broad sense used here) are constrained to produce designs which are copies of the communication structures of these organizations.
 
 I found this to be an acurate description of my experience so far in the field and I can see the ramifications of the culture of a company affecting design and implementation desicion to 
