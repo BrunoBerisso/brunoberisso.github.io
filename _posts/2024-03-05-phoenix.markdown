@@ -1,21 +1,21 @@
 ---
 title:  "Phoenix: the Elixir Django"
-date:   2024-02-27 23:54:35 +0000
+date:   2024-03-05 23:54:35 +0000
 ---
 
-Ok so, as [I mentioned before]({% post_url 2024-02-27-elixir_intro %}) I'm working on a small project to learn about Phoenix, _what is that?_ you might ask, well good question! Phoenix is a big framework for building end-to-end web apps. Think of it as ”the Django of the Elixir world” and as such it does everything you might need (and more): server side HTML template rendering, REST API facilities, DB access, migrations, login, telemetry, etc… You could write a whole book about Phoenix alone given the amount ot things it does (like Django) and I'll write some more about it in coming posts, but I'm writing this because it provides a set of extra features that set it aside of most of what's out there to work with web apps. And push me into this madness of fighting with a niche lovely language like Elixir.
+Ok so, as [I mentioned before]({% post_url 2024-02-27-elixir_intro %}) I'm working on a small project to learn about Phoenix, _what is that?_ you might ask, well good question! Phoenix is a big framework for building end-to-end web apps. Think of it as ”the Django of the Elixir world” and as such it does everything you might need (and more): server-side HTML template rendering, REST API facilities, DB access, migrations, login, telemetry, etc… You could write a whole book about Phoenix alone given the number of things it does (like Django) and I'll write some more about it in coming posts, but I'm writing this because it provides a set of extra features that set it aside of most of what's out there to work with web apps. And push me into this madness of fighting with a niche lovely language like Elixir.
 
 ## LiveView
 
-This is _the_ feature that put Phoenix in the radar for me, it is a mechanism to build client-server applications that provides two things: communication using lower level APIs instead of HTTP REST requests, and it keeps track of the state affecting the UI in the client. Using this two things it allows to build interactions very similar to how React works:
+This is _the_ feature that put Phoenix on the radar for me, it is a mechanism to build client-server applications that provides two things: communication using lower-level APIs instead of HTTP REST requests, and it keeps track of the state affecting the UI in the client. Using these two things allows us to build interactions very similar to how React works:
 
 1. You render the UI with some state.
-2. An event fires tipically in the UI like the click of a button that produces a change in the state.
-3. LiveView [compute the diff](https://www.reddit.com/r/elixir/comments/t80xbw/does_phoenix_liveview_use_domdiffing_to_update/) required to update the UI and push those changes down to the client.
+2. An event fires typically in the UI like the click of a button that produces a change in the state.
+3. LiveView [computes the diff](https://www.reddit.com/r/elixir/comments/t80xbw/does_phoenix_liveview_use_domdiffing_to_update/) required to update the UI and push those changes down to the client.
 
-The main difference with React is that all the hard work happens in the backend instead of in the client, this open the door for all the power of [Phonenix real-time features](#real-time-features-you-say) to build multi-user UIs. That's way companies like [Veeps use it to handle live streaming](http://localhost:4000/2024/02/27/phoenix.html#real-time-features-you-say) to milions of users.
+The main difference with React is that all the hard work happens in the backend instead of in the client, this opens the door for all the power of [Phonenix real-time features](#real-time-features-you-say) to build multi-user UIs. That's why companies like [Veeps use it to handle live [streaming](http://localhost:4000/2024/02/27/phoenix.html#real-time-features-you-say) to millions of users.
 
-Now think about the cases where the stream of data comes from other sistems, like in finances for example where you have a constant stream of market updates. Phonenix would be a great option to have an OLAP pipeline running at near real-time speed pushing updates to clients.
+Now think about the cases where the stream of data comes from other systems, like in finances for example where you have a constant stream of market updates. Phonenix would be a great option to have an OLAP pipeline running at near real-time speed pushing updates to clients.
 
 For all this magic to work you will need to handle your UI using Phoenix, so it knows what state is affecting what part of the UI and how to compute the diff. To do so it provides a template language so you can write things like this
 
@@ -46,11 +46,11 @@ which will grab the values in the `@feed` struct and produce an HTML like (styli
 </dl>
 {% endhighlight %}
 
-Now if for some reason `@feed.title` change to first `<dd/>` will get updated. Pretty stright forward so far!
+Now if for some reason `@feed.title` change to first `<dd/>` will get updated. Pretty straightforward so far!
 
 ## Real-Time Features you say?
 
-These are some of the feature that came out-of-the-box with Phoenix around multi-user rea-time.
+These are some of the features that came out of the box with Phoenix around multi-user real-time.
 
 ### [Channels](https://hexdocs.pm/phoenix/channels.html)
 
@@ -61,6 +61,6 @@ The neat thing is: your backend might be a cluster with a handful of nodes, if y
 The second neat thing is: you can use whatever you want on the client side. You are not required to handle the UI with Phoenix but you could use a native iOS app, a Raspberry Pi, and a web SPA all connect to the same topic.
 
 ### [Presence](https://hexdocs.pm/phoenix/Phoenix.Presence.html)
-This builds user-tracking on top of Channels. Allows to track if/when an user is connected or disconnected at any given time.
+This builds user-tracking on top of Channels. Allows to track if/when a user is connected or disconnected at any given time.
 
 So… I'm building something to get a grasp of how it all comes to be.

@@ -1,0 +1,59 @@
+---
+title:  "Pheeds"
+date:   2024-03-14 22:26:08 +0000
+---
+
+In previous posts I shared what [I found about Elixr]({% post_url 2024-02-27-elixir_intro %}) while trying to learn [how Phoenix works]({% post_url 2024-03-05-phoenix %}) with the intention of building test application I called **"Pheeds"** (_Ph_oenix + f_eeds_): a simple RSS feed reader that allows the user to add sources of type RSS, Atom or any other static HTML page and it will automatically refresh every now and then.
+
+The _"killer feature"_ here is the HTML support which is done by allowing to set a couple of XPath expressions to extract the content of the page during the sync process. But it has more, it makes heavy use of [LiveView]({% post_url 2024-03-05-phoenix %}#liveview)s... well, all views are _live_ which probably is not the best approach. Anyway, the app is really simple and honestly was a blast to build. Every time I had to do something outside of the main task it always worked on the first try, is also true that getting through the Phoenix docs initially is a PITA to the point that it was the drop that spilled the glass for me to start this blog!
+
+### Conclusions
+
+My impressions of Phoenix and Elixir can't be better, I have a great time building Pheeds and never felt the need to use anything outside of what the ecosystem was providing me. It is true that my app was one level above being a TODO app, but even so, I have the sense that everything I could need was just there. I'm talking mostly about `mix` the build tool that comes with Elixir and the tasks that Phoenix ships for it, it allows you to bootstrap new views, add migrations, run tests, etc. I didn't have to choose a migrations approach or investigate how to organize my project because Phoenix does that for me and I highly appreciate it.
+
+{% highlight ash %}
+/workspace/pheeds # This is how you run Phoenixs mix tasks to bootstrap things
+/workspace/pheeds # mix phx.gen
+mix phx.gen.auth     # Generates authentication logic for a resource
+mix phx.gen.cert     # Generates a self-signed certificate for HTTPS testing
+mix phx.gen.channel  # Generates a Phoenix channel
+mix phx.gen.context  # Generates a context with functions around an Ecto schema
+mix phx.gen.embedded # Generates an embedded Ecto schema file
+mix phx.gen.html     # Generates context and controller for an HTML resource
+mix phx.gen.json     # Generates context and controller for a JSON resource
+mix phx.gen.live     # Generates LiveView, templates, and context for a resource
+mix phx.gen.notifier # Generates a notifier that delivers emails by default
+mix phx.gen.presence # Generates a Presence tracker
+mix phx.gen.release  # Generates release files and optional Dockerfile for release-based deployments
+mix phx.gen.schema   # Generates an Ecto schema and migration file
+mix phx.gen.secret   # Generates a secret
+mix phx.gen.socket   # Generates a Phoenix socket handler
+{% endhighlight %}
+
+Also, Phonenix was built to tackle applications that require near-real-time interactions with many (thousands, millions) concurrent users. Those kinds of systems were the reason why Erlan was invented 40 years ago and that's why [Discord used Elixr to handle 5 million concurrent users](https://discord.com/blog/how-discord-scaled-elixir-to-5-000-000-concurrent-users) and more recently [Veeps migrated to Phoenix to support live events streaming](https://elixir-lang.org/blog/2024/03/05/veeps-elixir-case/) only requiring a team of 4 people. Knowing this I was expecting to have an experience more tailored to those specific scenarios but I found it to be suitable for much more general cases, I would prefer to use Phoenix to build my next REST API than a lot of other options out there (yes, I'm talking to you FastAPI, and to you too Spring)
+
+### Simple vs Easy
+
+During the weeks I spent working on this I have always had this idea in the back of my mind, Elixir and Phoenix are not easy pieces of technilogy but they are really simple. As [I mentioned before]({% post_url 2024-02-27-elixir_intro%}#simple-made-easy) Elixir in particular is a simple language with a nice working environment and build tool, I was able to produce non-trivial programs within days and I stretch to the more complex ones, like multi-node Elixir clusters, without moving my hands out of the keyboard. That for me is _the_ secret weapon of this development environment: is super powerful and yet super simple.
+
+Phoenix is a little more sophisticated, it's a big framework that has one tool for each job you could possibly face while working on any kind of web-based solutions. It's opinionated in the way it manages configuration and migrations and I found their opinions to match mine so 👌 but even if that's not the case for you it's great to have a starting point to make more informed decisions about what could be a "right" way to do things. The part I found confusing at the beginning is that all the plumbing building your app is based on macros (Elixir has macros 😐) so it can be hard to understand, once you can spot _what's a macro and what's not_ in your code that problem goes away. 
+
+Now, If I would go with the standard tooling for building Pheeds it would be something like TypeScript + React for the frontend and FastAPI (or any Python thing) / Spring Boot for the backend. Thinking about those tools from the perspective of Phoenix they don't look much simpler... but we are so used to them that they become _easy_ to use even if they are a hot mess. And in the long run, as [Rich Hickey explains in his talk](https://youtu.be/SxdOUGdseq4?t=1034), you end up paying the price of having a fast and smooth bootstrap of the project because you picked whatever you are familiar with instead of looking for something probably not that familiar (or "easy") but simpler.
+
+Finding the balance here is hard, but if we keep choosing the _easy_ without ever trying anything new, and _simpler_, we will never break the loop and what's worse without trying other stuff we might miss a better way of producing software. It's impossible to know what you don't know otherwise.
+
+## Conway's Law
+
+Melvin Conway (not to be confused with John Conway from the _game of life_) stated this law in [a publication I highly recommend reading](http://www.melconway.com/Home/pdf/committees.pdf):
+> Organizations which design systems (in the broad sense used here) are constrained to produce designs which are copies of the communication structures of these organizations.
+
+I found this to be an accurate observation, probably not a hard rule but I see this pattern every day, so I have the following thought: inside the development team the tools we choose to write software shape a big chunk of the internal communication so how would this affect the designs we produce? Having an object-oriented programming language forces us to discuss things like object lifecycles, hierarchies, and internal state (⛈️), on the other hand, if we choose a functional programming language we will be talking about functions, modules, and values (🌈).
+
+In my experience most of the time the development tools dictate an important part of the design because we start thinking about the problem using the tools we are more familiar with, instead of looking at the problem in the abstract and letting it decide which is the best tool for the job (yet another reason to try new things once in a while). I think this is one of the bigger fallacies about programming languages, that we "pick the right language for the job", we rarely pick the right language for the job but the one we are most used to using. I never thought before about the impact that this has on team communication but I think it makes a lot of sense, programming languages and frameworks clearly shape how we talk about the design of our solutions and dictate the vocabulary we are going to have available minimizing/maximizing the ideas that we could produce.
+
+So, long story short
+- It's important to try new things
+- Don't pick something because it's easy
+- Beware what you get used to
+
+_Note: man... those points apply to a much broader context that I was targeting_ 😳
