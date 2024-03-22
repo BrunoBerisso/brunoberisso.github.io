@@ -3,9 +3,15 @@ title:  "Pheeds"
 date:   2024-03-14 22:26:08 +0000
 ---
 
-In previous posts I shared what [I found about Elixr]({% post_url 2024-02-27-elixir_intro %}) while trying to learn [how Phoenix works]({% post_url 2024-03-05-phoenix %}) with the intention of building test application I called **"Pheeds"** (_Ph_oenix + f_eeds_): a simple RSS feed reader that allows the user to add sources of type RSS, Atom or any other static HTML page and it will automatically refresh every now and then.
+In previous posts I shared what [I found about Elixr]({% post_url 2024-02-27-elixir_intro %}) while trying to learn [how Phoenix works]({% post_url 2024-03-05-phoenix %}) with the intention of building test application I called **"Pheeds"** (_Ph_oenix + f_eeds_): a simple RSS feed reader that allows the user to add sources of type RSS, Atom or any other static HTML page and it will automatically refresh every now and then. [Source code is here](https://github.com/BrunoBerisso/pheeds)
+
+![Pheeds RSS list](/assets/images/pheeds_1.png)
 
 The _"killer feature"_ here is the HTML support which is done by allowing to set a couple of XPath expressions to extract the content of the page during the sync process. But it has more, it makes heavy use of [LiveView]({% post_url 2024-03-05-phoenix %}#liveview)s... well, all views are _live_ which probably is not the best approach. Anyway, the app is really simple and honestly was a blast to build. Every time I had to do something outside of the main task it always worked on the first try, is also true that getting through the Phoenix docs initially is a PITA to the point that it was the drop that spilled the glass for me to start this blog!
+
+{:.text-align-center}
+![Pheeds RSS list](/assets/images/pheeds_2.png){: width="40%" }
+![Pheeds RSS list](/assets/images/pheeds_3.png){: width="40%" }
 
 ### Conclusions
 
@@ -49,9 +55,9 @@ Melvin Conway (not to be confused with John Conway from the _game of life_) stat
 
 I found this to be an accurate observation, probably not a hard rule but I see this pattern every day, so I have the following thought: inside the development team the tools we choose to write software shape a big chunk of the internal communication so how would this affect the designs we produce? Having an object-oriented programming language forces us to discuss things like object lifecycles, hierarchies, and internal state (⛈️), on the other hand, if we choose a functional programming language we will be talking about functions, modules, and values (🌈).
 
-In my experience most of the time the development tools dictate an important part of the design because we start thinking about the problem using the tools we are more familiar with, instead of looking at the problem in the abstract and letting it decide which is the best tool for the job (yet another reason to try new things once in a while). I think this is one of the bigger fallacies about programming languages, that we "pick the right language for the job", we rarely pick the right language for the job but the one we are most used to using. I never thought before about the impact that this has on team communication but I think it makes a lot of sense, programming languages and frameworks clearly shape how we talk about the design of our solutions and dictate the vocabulary we are going to have available minimizing/maximizing the ideas that we could produce.
+In my experience, our most familiar development tools dictate an important part of the design because we frame our thinking in those terms, instead of looking at the problem in the abstract and letting drive which is the best tool for the job (yet another reason to try new things once in a while). I think this is one of the bigger fallacies about programming languages, that we "pick the right language for the job", we rarely pick the right language for the job but the one we are more familiar with, the _easiest_. I never thought before about the impact that this has on team communication but I think it makes a lot of sense, programming languages and frameworks clearly shape how we talk about the design of our solutions and dictate the vocabulary we are going to have available minimizing/maximizing the ideas that we could produce.
 
 So, long story short
-- It's important to try new things
-- Don't pick something because it's easy
-- Beware what you get used to
+- *It's important to try new things*, so we expand our vocabulary of ideas
+- *Don't pick something because it's easy*, pick the right thing or the simpler one
+- *Beware what you get used to*. Once something becomes so familiar that you just get used to dealing with it even if it's a pain you lose sight of the painful part and carry it over without notice. The clearer example of this for me is manual memory management: after a while, you forget that you are constantly thinking about it, or a bad relationship with a partner which manifests in the exact same way 😆
