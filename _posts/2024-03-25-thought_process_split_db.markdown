@@ -1,16 +1,16 @@
 ---
 title:  "Thought Process: split database schema"
-date:   2024-03-15 19:00:35 +0000
+date:   2024-03-25 19:00:35 +0000
 ---
 
-This post is my thought process while trying to analyze the problem so it will not be a perfect straight piece of text. I have been tasked with the refactoring of a graph database schema supporting a B2B product to make it db-agnostic and split the operational and client-specific data stores. This implies that data stores might be different which means: distributed transactions 😐
+I have been tasked with the refactoring of a database schema supporting a B2B product to make it agnostic to the storage model (it was previously developed targeting a couple of graph databases) and split the operational and client-specific data such that the product could be deployed in isolation from the client data. This implies that data stores for these two domains might be different which means: distributed transactions 😐. Quick disclaimer, this post is my thought process while trying to analyze the problem so it will not be a perfect straight piece of text. 
 
-Now, as far as I can tell (and search in Google) any solution would be tailored to the specific case, but some concrete questions might be worth asking - answering:
+So I will start with these questions:
 1. How much referential integrity is enough?
 2. How often do references become invalid?
 3. What life cycles are these references tight to?
 
-_(At this point I already have an implementation in my head that I'm playing with, each of those questions is my rotating this idea and trying to observe it from different angles. If that question sheds some light over an invisible edge the shape of the solution will change to accommodate for that)_
+_(At this point I already have an implementation in my head that I'm playing with, each of those questions is me rotating this idea and trying to observe it from different angles. If that question sheds some light over an invisible edge the shape of the solution will change to accommodate for that)_
 
 ### Enough Referential Integrity
 
