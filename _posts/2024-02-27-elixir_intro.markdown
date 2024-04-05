@@ -13,7 +13,7 @@ So I forgot Phoenix for a moment and concentrated my efforts on Elixir first. El
 
 Although Elixir and Erlang are different languages they are [similar at many levels](https://elixir-lang.org/crash-course.html), but the key distinctive feature is that they are specifically conceived for solving problems that require high concurrency. Such programs could be for example (sourpice sourprice) a web server, a meetings tool like Zoom (which I think was using Erlang at some point), a controller in a plane getting sensor values from multiple sources, etc
 
-As his older sister (Erlang is an old lady to me), Elixir is being used by some big companies like Discord, Slack, and Pinterest. Although they indeed have it confined to some key places as described by [the Discord](https://medium.com/@siddharth.sabron/how-discord-used-rust-to-scale-elixir-up-to-11-million-concurrent-users-7eb84194aee5) team here](https://medium.com/@siddharth.sabron/how-discord-used-rust-to-scale-elixir-up-to-11-million-concurrent-users-7eb84194aee5) the fact that it's still being actively used after so many years speaks to the stability of the tool.
+As his older sister (Erlang is an old lady to me), Elixir is being used by some big companies like Discord, Slack, and Pinterest. Although they indeed have it confined to some key places as described by [the Discord](https://medium.com/@siddharth.sabron/how-discord-used-rust-to-scale-elixir-up-to-11-million-concurrent-users-7eb84194aee5) team [here](https://medium.com/@siddharth.sabron/how-discord-used-rust-to-scale-elixir-up-to-11-million-concurrent-users-7eb84194aee5) the fact that it's still being actively used after so many years speaks to the stability of the tool.
 
 ### Hands-on
 
