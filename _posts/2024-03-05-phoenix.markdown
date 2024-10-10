@@ -13,7 +13,7 @@ This is _the_ feature that put Phoenix on the radar for me, it is a mechanism to
 2. An event fires typically in the UI like the click of a button that produces a change in the state.
 3. LiveView [computes the diff](https://www.reddit.com/r/elixir/comments/t80xbw/does_phoenix_liveview_use_domdiffing_to_update/) required to update the UI and push those changes down to the client.
 
-The main difference with React is that all the hard work happens in the backend instead of in the client, this opens the door for all the power of [Phonenix real-time features](#real-time-features-you-say) to build multi-user UIs. That's why companies like [Veeps use it to handle live streaming](http://localhost:4000/2024/02/27/phoenix.html#real-time-features-you-say) to millions of users.
+The main difference with React is that all the hard work happens in the backend instead of in the client, this opens the door for all the power of [Phonenix real-time features](#real-time-features-you-say) to build multi-user UIs. That's why companies like [Veeps use it to handle live streaming](#real-time-features-you-say) to millions of users.
 
 Now think about the cases where the stream of data comes from other systems, like in finances for example where you have a constant stream of market updates. Phonenix would be a great option to have an OLAP pipeline running at near real-time speed pushing updates to clients.
 
