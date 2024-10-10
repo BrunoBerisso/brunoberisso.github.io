@@ -199,5 +199,5 @@ From that point forward it was just a matter to adapt to the explosion of intern
 
 Given the amount of smart people dealing with this problem for so long I think we might done with it, there is no much juice to get out of this rock. I think the next step
 forward would be push the wold concept of "remote computation" one level deeper into our tools and instead of "make RPC calls as-is they where local" it might be "make our
-software naturally distributed". The only serious effort in this direction that I know about is Unison-lang, which has being in my radar scince their first appear in Strange
+software naturally distributed". The only serious effort in this direction that I know about is [Unison](https://www.unison-lang.org/), which has being in my radar scince their first appear in Strange
 Loop many years ago. I'll be writing about it more here for sure.
